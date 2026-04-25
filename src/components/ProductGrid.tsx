@@ -125,7 +125,7 @@ export default function ProductGrid() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-          <AnimatePresence mode='wait'>
+          <AnimatePresence>
             {filteredBikes.map((bike, index) => (
               <motion.div
                 key={bike.id}
