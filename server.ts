@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 
@@ -21,6 +22,11 @@ async function startServer() {
     // Modo Producción: Servimos los archivos estáticos de /dist
     const distPath = path.resolve(process.cwd(), 'dist');
     
+    if (!fs.existsSync(distPath)) {
+      console.error(`[CRITICAL] Dist folder NOT FOUND at: ${distPath}`);
+      console.log('Current files:', fs.readdirSync(process.cwd()));
+    }
+
     console.log(`[Server] Project Root: ${process.cwd()}`);
     console.log(`[Server] Dist Folder: ${distPath}`);
     
