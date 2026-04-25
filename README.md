@@ -1,11 +1,42 @@
-<div align="center">
+# MotoZone EK - Showroom Digital
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Showroom digital oficial de **MotoZone EK**, especialistas en motocicletas **Empire Keeway**. Esta plataforma permite a los usuarios explorar los últimos modelos, consultar especificaciones técnicas y realizar solicitudes de financiamiento a través de un proceso digital fluido.
 
-  <h1>Built with AI Studio</h2>
+## 🚀 Tecnologías
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+- **React 18** + **Vite**
+- **TypeScript**
+- **Tailwind CSS** (Styling)
+- **Framer Motion** (Animaciones)
+- **React Router** (Navegación)
+- **Lucide React** (Iconografía)
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+## 🛠️ Instalación y Desarrollo
 
-</div>
+1. Clona el repositorio:
+   ```bash
+   git clone <tu-url-de-github>
+   ```
+
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+
+3. Inicia el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
+
+4. Construye para producción:
+   ```bash
+   npm run build
+   ```
+
+## 🌐 Despliegue en Render
+
+Este proyecto incluye un archivo `render.yaml` para despliegue automático en **Render**.
+Simplemente conecta tu repositorio a una nueva **Static Site** en el panel de Render.
+
+- **Build Command:** `npm run build`
+- **Publish Directory:** `dist`
