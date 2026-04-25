@@ -19,40 +19,47 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    // Modo Producción: Servimos los archivos estáticos de /dist
-    const distPath = path.resolve(process.cwd(), 'dist');
+    // Modo Producción: Intentamos localizar la carpeta dist de forma robusta
+    let distPath = path.resolve(process.cwd(), 'dist');
+    
+    // Si ya estamos dentro de /dist o si /dist no existe pero estamos en la raíz de los archivos estáticos
+    if (!fs.existsSync(distPath) && fs.existsSync(path.join(process.cwd(), 'index.html'))) {
+      distPath = process.cwd();
+    }
     
     if (!fs.existsSync(distPath)) {
-      console.error(`[CRITICAL] Dist folder NOT FOUND at: ${distPath}`);
-      console.log('Current files:', fs.readdirSync(process.cwd()));
+      console.error(`[CRITICAL] Dist folder NOT FOUND. Tried: ${distPath}`);
+      console.log('Current working directory:', process.cwd());
+      console.log('Files in current directory:', fs.readdirSync(process.cwd()));
     }
 
-    console.log(`[Server] Project Root: ${process.cwd()}`);
-    console.log(`[Server] Dist Folder: ${distPath}`);
+    console.log(`[Server] serving static files from: ${distPath}`);
     
-    // Middleware de logging para ver qué archivos se están pidiendo y si existen
+    // Middleware de logging para depuración
     app.use((req, res, next) => {
-      if (req.url.startsWith('/img/')) {
-        console.log(`[Image Request] ${req.url}`);
+      if (req.url.match(/\.(png|jpg|jpeg|gif|svg|webp)$/)) {
+        console.log(`[Asset Request] ${req.url}`);
       }
       next();
     });
 
-    // Servir archivos estáticos con opciones específicas para evitar fallos
+    // Servir archivos estáticos
     app.use(express.static(distPath, {
       index: 'index.html',
-      dotfiles: 'ignore',
       etag: true,
       fallthrough: true
     }));
 
-    // Si una imagen se pide como /img/foto.png pero ahora están en la raíz
-    app.use('/img', express.static(distPath));
+    // Fallback: si no se encuentra en dist, intentar en el directorio raíz del proyecto
+    // (Útil si Render no procesó bien la carpeta public)
+    app.use(express.static(process.cwd(), {
+      fallthrough: true
+    }));
 
     // SPA Fallback
     app.get('*', (req, res) => {
-      // Si parece un archivo (tiene extensión) y llegó aquí, es que no existe
-      if (path.extname(req.path)) {
+      const ext = path.extname(req.path);
+      if (ext && ext !== '.html') {
         res.status(404).send('Not Found');
         return;
       }
