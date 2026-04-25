@@ -64,7 +64,7 @@ export default function Hero() {
             className="flex flex-col items-center"
           >
             <img 
-              src="/img/MOTO-ZONE.png" 
+              src="/img/moto-zone.png" 
               alt="MotoZone EK Logo Showcase" 
               className="relative z-10 w-full max-w-[360px] object-contain brightness-0 hover:scale-105 transition-transform duration-700"
             />

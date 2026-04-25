@@ -29,7 +29,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <img src="/img/MOTO-ZONE.png" alt="Moto Zone Logo" className="h-8 md:h-10 w-auto" />
+          <img src="/img/moto-zone.png" alt="Moto Zone Logo" className="h-8 md:h-10 w-auto" />
         </Link>
 
         {/* Desktop Navigation */}

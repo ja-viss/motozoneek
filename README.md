@@ -33,10 +33,15 @@ Showroom digital oficial de **MotoZone EK**, especialistas en motocicletas **Emp
    npm run build
    ```
 
-## 🌐 Despliegue en Render
+## 🌐 Despliegue en Render (IMPORTANTE)
 
-Este proyecto incluye un archivo `render.yaml` para despliegue automático en **Render**.
-Simplemente conecta tu repositorio a una nueva **Static Site** en el panel de Render.
+Para que las imágenes y rutas funcionen correctamente, sigue estos pasos en el panel de Render:
 
-- **Build Command:** `npm run build`
-- **Publish Directory:** `dist`
+1. Crea un nuevo **Static Site**.
+2. Conecta tu repositorio de GitHub.
+3. Configura los siguientes campos:
+   - **Build Command:** `npm install && npm run build`
+   - **Publish Directory:** `dist`
+4. **No** selecciones "Web Service", ya que eso te pedirá un "Start Command" que este proyecto no necesita por ser un sitio estático.
+
+El archivo `render.yaml` incluido en el proyecto configurará automáticamente las reglas de redirección para que las imágenes se carguen correctamente.
