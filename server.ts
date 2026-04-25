@@ -20,41 +20,31 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     // Modo Producción: Intentamos localizar la carpeta dist de forma robusta
-    let distPath = path.resolve(process.cwd(), 'dist');
+    const possiblePaths = [
+      path.resolve(process.cwd(), 'dist'),
+      path.resolve(__dirname, 'dist'),
+      process.cwd()
+    ];
     
-    // Si ya estamos dentro de /dist o si /dist no existe pero estamos en la raíz de los archivos estáticos
-    if (!fs.existsSync(distPath) && fs.existsSync(path.join(process.cwd(), 'index.html'))) {
-      distPath = process.cwd();
-    }
-    
-    if (!fs.existsSync(distPath)) {
-      console.error(`[CRITICAL] Dist folder NOT FOUND. Tried: ${distPath}`);
-      console.log('Current working directory:', process.cwd());
-      console.log('Files in current directory:', fs.readdirSync(process.cwd()));
-    }
+    let distPath = possiblePaths.find(p => fs.existsSync(path.join(p, 'index.html'))) || possiblePaths[0];
 
     console.log(`[Server] serving static files from: ${distPath}`);
     
-    // Middleware de logging para depuración
-    app.use((req, res, next) => {
-      if (req.url.match(/\.(png|jpg|jpeg|gif|svg|webp)$/)) {
-        console.log(`[Asset Request] ${req.url}`);
-      }
-      next();
-    });
-
-    // Servir archivos estáticos
+    // Servir archivos estáticos del build (Vite coloca contents de public/ en la raíz de dist/)
     app.use(express.static(distPath, {
       index: 'index.html',
       etag: true,
       fallthrough: true
     }));
 
-    // Fallback: si no se encuentra en dist, intentar en el directorio raíz del proyecto
-    // (Útil si Render no procesó bien la carpeta public)
-    app.use(express.static(process.cwd(), {
-      fallthrough: true
-    }));
+    // Soporte para rutas que aún usen /img/ como prefijo (mapeo a la raíz de estáticos)
+    app.use('/img', express.static(distPath));
+    
+    // Si por alguna razón la carpeta public no se mezcló en el build (fallo raro de build)
+    const publicPath = path.resolve(process.cwd(), 'public');
+    if (fs.existsSync(publicPath)) {
+      app.use(express.static(publicPath));
+    }
 
     // SPA Fallback
     app.get('*', (req, res) => {
