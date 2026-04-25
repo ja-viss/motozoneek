@@ -1,39 +1,7 @@
+import { getDriveUrl } from '../utils/driveUtils';
+
 /**
- * IDs de Google Drive para las imágenes.
- * El usuario puede actualizar estos IDs desde el panel de Google Drive.
- * Para obtener el ID: clic derecho en el archivo -> Compartir -> Copiar enlace.
- * El ID es la parte larga alfanumérica entre '/d/' y '/view'.
+ * Centros de configuración de imágenes de la marca.
+ * Aquí puedes actualizar el enlace de Google Drive del logo.
  */
-export const DRIVE_FOLDER_ID = '1RLb7b8XYsPF8jsAtay4kVBFSkG0OowFu';
-
-// Estructura base para enlaces directos de Drive
-const getDriveUrl = (id: string) => `https://lh3.googleusercontent.com/u/0/d/${id}`;
-
-// Mapa de imágenes (Local vs Drive)
-// Mientras no tengamos los IDs reales, usaremos los locales por defecto,
-// pero la estructura está lista para cambiar a Drive.
-export const IMAGES = {
-  logos: {
-    main: '/moto-zone.png',
-    // Ejemplo de cómo sería con Drive una vez se tengan los IDs:
-    // main: getDriveUrl('ID_DE_MOTO_ZONE'),
-  },
-  products: {
-    matrix: {
-      thumb: '/matrix1.png',
-      gallery: ['/matrix1.png', '/matrix2.png']
-    },
-    rk: {
-      thumb: '/rk1.png',
-      gallery: ['/rk1.png', '/rk2.png']
-    },
-    xpress: {
-      thumb: '/xpress1.png',
-      gallery: ['/xpress1.png', '/xpress2.png']
-    },
-    owen: {
-      thumb: '/owen1.png',
-      gallery: ['/owen1.png', '/owen2.png']
-    }
-  }
-};
+export const LOGO_URL = 'https://lh3.googleusercontent.com/d/1du6W85UfWWPGlWcXZmlMtP5lzfH3EeDm';

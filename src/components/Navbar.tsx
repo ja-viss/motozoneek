@@ -3,7 +3,7 @@ import { Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-import { resolveImageUrl } from '../utils/imageUtils';
+import { LOGO_URL } from '../constants/images';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +32,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img 
-            src={resolveImageUrl("/moto-zone.png")} 
+            src={LOGO_URL} 
             alt="Moto Zone Logo" 
             className="h-8 md:h-10 w-auto" 
             fetchPriority="high"

@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
-import { resolveImageUrl } from '../utils/imageUtils';
+import { BIKES } from '../constants/bikes';
+import { LOGO_URL } from '../constants/images';
 
 export default function Hero() {
   return (
@@ -65,7 +66,7 @@ export default function Hero() {
             className="flex flex-col items-center"
           >
             <img 
-              src={resolveImageUrl("/moto-zone.png")} 
+              src={LOGO_URL} 
               alt="MotoZone EK Logo Showcase" 
               decoding="async"
               fetchPriority="high"

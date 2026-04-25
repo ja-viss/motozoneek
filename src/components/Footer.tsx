@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { resolveImageUrl } from '../utils/imageUtils';
+import { LOGO_URL } from '../constants/images';
 
 export default function Footer() {
   return (
@@ -9,7 +9,7 @@ export default function Footer() {
           <div className="space-y-8">
             <div className="flex items-center gap-2">
               <img 
-                src={resolveImageUrl("/moto-zone.png")} 
+                src={LOGO_URL} 
                 alt="Moto Zone" 
                 className="h-8 w-auto brightness-0 invert" 
               />
