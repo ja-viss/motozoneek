@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronRight, X, ZoomIn } from 'lucide-react';
+import { resolveImageUrl } from '../utils/imageUtils';
 
 const categories = ['Todas', 'Automática', 'Sincrónica'];
 
@@ -9,8 +10,8 @@ const bikes = [
     id: 1,
     name: 'EK Matrix Lite 150',
     category: 'Automática',
-    image: '/img/matrix1.png',
-    images: ['/img/matrix1.png', '/img/matrix2.png'],
+    image: resolveImageUrl('/img/matrix1.png'),
+    images: [resolveImageUrl('/img/matrix1.png'), resolveImageUrl('/img/matrix2.png')],
     price: '$1,380',
     hp: '8.71 HP',
     cc: '150 CC',
@@ -28,8 +29,8 @@ const bikes = [
     id: 2,
     name: 'EK RK 200',
     category: 'Sincrónica',
-    image: '/img/rk1.png',
-    images: ['/img/rk1.png', '/img/rk2.png'],
+    image: resolveImageUrl('/img/rk1.png'),
+    images: [resolveImageUrl('/img/rk1.png'), resolveImageUrl('/img/rk2.png')],
     price: '$1,600',
     hp: '12.87 HP',
     cc: '199.5 CC',
@@ -47,8 +48,8 @@ const bikes = [
     id: 3,
     name: 'EK Xpress 150',
     category: 'Sincrónica',
-    image: '/img/xpress1.png',
-    images: ['/img/xpress1.png', '/img/xpress2.png'],
+    image: resolveImageUrl('/img/xpress1.png'),
+    images: [resolveImageUrl('/img/xpress1.png'), resolveImageUrl('/img/xpress2.png')],
     price: '$1,200',
     hp: '12.3 HP',
     cc: '149 CC',
@@ -65,8 +66,8 @@ const bikes = [
     id: 4,
     name: 'EK Owen 150 (GS)',
     category: 'Sincrónica',
-    image: '/img/owen1.png',
-    images: ['/img/owen1.png', '/img/owen2.png'],
+    image: resolveImageUrl('/img/owen1.png'),
+    images: [resolveImageUrl('/img/owen1.png'), resolveImageUrl('/img/owen2.png')],
     price: '$1,300',
     hp: '12.3 HP',
     cc: '150 CC',
@@ -143,6 +144,8 @@ export default function ProductGrid() {
                     <img 
                       src={bike.image} 
                       alt={bike.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-moto-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -216,6 +219,7 @@ export default function ProductGrid() {
                   <img
                     src={mainImage || selectedBike.image}
                     alt={selectedBike.name}
+                    decoding="async"
                     className="max-h-[65vh] w-auto object-contain filter drop-shadow-[0_35px_35px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-500"
                   />
                 </motion.div>
@@ -230,7 +234,12 @@ export default function ProductGrid() {
                           (mainImage || selectedBike.image) === img ? 'border-moto-orange scale-105' : 'border-slate-100 opacity-60 hover:opacity-100'
                         }`}
                       >
-                        <img src={img} className="w-full h-full object-contain" />
+                        <img 
+                          src={img} 
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-contain" 
+                        />
                       </button>
                     ))
                   }

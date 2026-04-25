@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { resolveImageUrl } from '../utils/imageUtils';
 
 export default function Footer() {
   return (
@@ -7,7 +8,11 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 border-b border-white/10 pb-16">
           <div className="space-y-8">
             <div className="flex items-center gap-2">
-              <img src="/img/moto-zone.png" alt="Moto Zone" className="h-8 w-auto brightness-0 invert" />
+              <img 
+                src={resolveImageUrl("/img/moto-zone.png")} 
+                alt="Moto Zone" 
+                className="h-8 w-auto brightness-0 invert" 
+              />
             </div>
             <p className="text-sm font-medium text-slate-400 max-w-xs leading-relaxed">
               Redefiniendo la ingeniería de alto rendimiento para la próxima generación de pilotos. Especialistas en Empire Keeway.
