@@ -65,7 +65,7 @@ export default function Hero() {
             className="flex flex-col items-center"
           >
             <img 
-              src={resolveImageUrl("/img/moto-zone.png")} 
+              src={resolveImageUrl("/moto-zone.png")} 
               alt="MotoZone EK Logo Showcase" 
               decoding="async"
               fetchPriority="high"

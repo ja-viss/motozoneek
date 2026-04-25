@@ -14,26 +14,26 @@ const getDriveUrl = (id: string) => `https://lh3.googleusercontent.com/u/0/d/${i
 // pero la estructura está lista para cambiar a Drive.
 export const IMAGES = {
   logos: {
-    main: '/img/moto-zone.png',
+    main: '/moto-zone.png',
     // Ejemplo de cómo sería con Drive una vez se tengan los IDs:
     // main: getDriveUrl('ID_DE_MOTO_ZONE'),
   },
   products: {
     matrix: {
-      thumb: '/img/matrix1.png',
-      gallery: ['/img/matrix1.png', '/img/matrix2.png']
+      thumb: '/matrix1.png',
+      gallery: ['/matrix1.png', '/matrix2.png']
     },
     rk: {
-      thumb: '/img/rk1.png',
-      gallery: ['/img/rk1.png', '/img/rk2.png']
+      thumb: '/rk1.png',
+      gallery: ['/rk1.png', '/rk2.png']
     },
     xpress: {
-      thumb: '/img/xpress1.png',
-      gallery: ['/img/xpress1.png', '/img/xpress2.png']
+      thumb: '/xpress1.png',
+      gallery: ['/xpress1.png', '/xpress2.png']
     },
     owen: {
-      thumb: '/img/owen1.png',
-      gallery: ['/img/owen1.png', '/img/owen2.png']
+      thumb: '/owen1.png',
+      gallery: ['/owen1.png', '/owen2.png']
     }
   }
 };

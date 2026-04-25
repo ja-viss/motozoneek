@@ -9,7 +9,7 @@ export default function Footer() {
           <div className="space-y-8">
             <div className="flex items-center gap-2">
               <img 
-                src={resolveImageUrl("/img/moto-zone.png")} 
+                src={resolveImageUrl("/moto-zone.png")} 
                 alt="Moto Zone" 
                 className="h-8 w-auto brightness-0 invert" 
               />

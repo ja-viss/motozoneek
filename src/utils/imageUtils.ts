@@ -17,17 +17,19 @@ const DRIVE_OVERRIDES: Record<string, string> = {
 export const resolveImageUrl = (path: string): string => {
   if (!path) return '';
   
-  // Extract filename without extension
-  const filename = path.split('/').pop()?.split('.')[0] || '';
+  // Si la ruta comienza con /img/, quitamos ese prefijo ya que ahora están en la raíz (public/)
+  const cleanPath = path.startsWith('/img/') ? path.replace('/img/', '/') : path;
+  
+  // Extract filename without extension for potential overrides
+  const filename = cleanPath.split('/').pop()?.split('.')[0] || '';
   
   // Check if there's a Drive override
   const driveId = DRIVE_OVERRIDES[filename];
   
   if (driveId) {
-    // Return direct link format for Google Drive
     return `https://drive.google.com/uc?export=view&id=${driveId}`;
   }
   
-  // Default to local path
-  return path;
+  // Default to the cleaned path (now at the root)
+  return cleanPath;
 };

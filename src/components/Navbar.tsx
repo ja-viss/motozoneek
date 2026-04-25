@@ -32,7 +32,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img 
-            src={resolveImageUrl("/img/moto-zone.png")} 
+            src={resolveImageUrl("/moto-zone.png")} 
             alt="Moto Zone Logo" 
             className="h-8 md:h-10 w-auto" 
             fetchPriority="high"

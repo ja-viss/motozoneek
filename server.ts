@@ -40,14 +40,12 @@ async function startServer() {
       fallthrough: true
     }));
 
-    // Fallback manual para la carpeta img por si acaso
-    app.use('/img', express.static(path.join(distPath, 'img'), {
-      fallthrough: false // Si no está aquí, que tire 404 para las imágenes
-    }));
+    // Si una imagen se pide como /img/foto.png pero ahora están en la raíz
+    app.use('/img', express.static(distPath));
 
     // SPA Fallback
     app.get('*', (req, res) => {
-      // Si parece un archivo y llegó aquí, es que no existe
+      // Si parece un archivo (tiene extensión) y llegó aquí, es que no existe
       if (path.extname(req.path)) {
         res.status(404).send('Not Found');
         return;
