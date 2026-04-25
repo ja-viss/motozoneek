@@ -19,8 +19,16 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     // Modo Producción: Servimos los archivos estáticos de /dist
-    const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
+    const distPath = path.resolve(__dirname, 'dist');
+    console.log('Serving static files from:', distPath);
+    
+    app.use(express.static(distPath, {
+      setHeaders: (res, path) => {
+        if (path.endsWith('.png') || path.endsWith('.jpg')) {
+          res.setHeader('Cache-Control', 'public, max-age=31536000');
+        }
+      }
+    }));
     
     app.get('*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
