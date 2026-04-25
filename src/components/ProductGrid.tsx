@@ -1,7 +1,21 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronRight, X, ZoomIn } from 'lucide-react';
-import { resolveImageUrl } from '../utils/imageUtils';
+
+// Función auxiliar para convertir enlaces de Drive a enlaces directos para <img>
+const getDriveUrl = (driveUrl: string) => {
+  if (!driveUrl || !driveUrl.includes('drive.google.com')) return driveUrl;
+  
+  let id = '';
+  if (driveUrl.includes('/d/')) {
+    id = driveUrl.split('/d/')[1]?.split('/')[0] || '';
+  } else if (driveUrl.includes('id=')) {
+    id = driveUrl.split('id=')[1]?.split('&')[0] || '';
+  }
+  
+  // Usamos el servicio de miniaturas de Google Drive que es más fiable para tags <img> directos
+  return id ? `https://lh3.googleusercontent.com/d/${id}` : driveUrl;
+};
 
 const categories = ['Todas', 'Automática', 'Sincrónica'];
 
@@ -10,8 +24,11 @@ const bikes = [
     id: 1,
     name: 'EK Matrix Lite 150',
     category: 'Automática',
-    image: resolveImageUrl('/public/matrix1.png'),
-    images: [resolveImageUrl('/public/matrix1.png'), resolveImageUrl('/matrix2.png')],
+    image: getDriveUrl('https://drive.google.com/file/d/1H7nvb2Fx2FdXndpj-9d5phQpXV4HbRTx/view?usp=drive_link'),
+    images: [
+      getDriveUrl('https://drive.google.com/file/d/1H7nvb2Fx2FdXndpj-9d5phQpXV4HbRTx/view?usp=drive_link'), 
+      getDriveUrl('https://drive.google.com/file/d/1y7lnXnF_Asm1rpvXqQ_C1DL2YgGjAqsO/view?usp=drive_link')
+    ],
     price: '$1,380',
     hp: '8.71 HP',
     cc: '150 CC',
@@ -29,8 +46,11 @@ const bikes = [
     id: 2,
     name: 'EK RK 200',
     category: 'Sincrónica',
-    image: resolveImageUrl('/rk1.png'),
-    images: [resolveImageUrl('/rk1.png'), resolveImageUrl('/rk2.png')],
+    image: getDriveUrl('https://drive.google.com/file/d/1ZQWLU8WjO7GbezrgY_RXlMlK9inDusFm/view?usp=drive_link'),
+    images: [
+      getDriveUrl('https://drive.google.com/file/d/1ZQWLU8WjO7GbezrgY_RXlMlK9inDusFm/view?usp=drive_link'), 
+      getDriveUrl('https://drive.google.com/file/d/1B0RJvYAx9EZ6QBzbi7fNfqMkAllTv9Eh/view?usp=drive_link')
+    ],
     price: '$1,600',
     hp: '12.87 HP',
     cc: '199.5 CC',
@@ -48,8 +68,11 @@ const bikes = [
     id: 3,
     name: 'EK Xpress 150',
     category: 'Sincrónica',
-    image: resolveImageUrl('/public/xpress1.png'),
-    images: [resolveImageUrl('/public/xpress1.png'), resolveImageUrl('/xpress2.png')],
+    image: getDriveUrl('https://drive.google.com/file/d/1YBXE9-2HgWsrTRtOD-GWZ45TAFCE_oEa/view?usp=drive_link'),
+    images: [
+      getDriveUrl('https://drive.google.com/file/d/1YBXE9-2HgWsrTRtOD-GWZ45TAFCE_oEa/view?usp=drive_link'), 
+      getDriveUrl('https://drive.google.com/file/d/1e7cCERiNKwItQ9mlJ9FoywvQfzrHXb9q/view?usp=drive_link')
+    ],
     price: '$1,200',
     hp: '12.3 HP',
     cc: '149 CC',
@@ -66,8 +89,11 @@ const bikes = [
     id: 4,
     name: 'EK Owen 150 (GS)',
     category: 'Sincrónica',
-    image: resolveImageUrl('/public/owen1.png'),
-    images: [resolveImageUrl('/public/owen1.png'), resolveImageUrl('/owen2.png')],
+    image: getDriveUrl('https://drive.google.com/file/d/1ctwLj1YQmMwBi_q8wq4FEbmS62hBusz6/view?usp=sharing'),
+    images: [
+      getDriveUrl('https://drive.google.com/file/d/1ctwLj1YQmMwBi_q8wq4FEbmS62hBusz6/view?usp=sharing'), 
+      getDriveUrl('https://drive.google.com/file/d/1dg5CbPaJ6jVSdNfYpXWF1ly6cdAUI4Vt/view?usp=drive_link')
+    ],
     price: '$1,300',
     hp: '12.3 HP',
     cc: '150 CC',
@@ -139,13 +165,15 @@ export default function ProductGrid() {
                 <div className="relative mb-8">
                   <div 
                     className="relative aspect-[4/5] bg-slate-50 overflow-hidden cursor-pointer"
-                    onClick={() => setSelectedBike(bike)}
+                    onClick={() => {
+                        setSelectedBike(bike);
+                        setMainImage(bike.image);
+                    }}
                   >
                     <img 
                       src={bike.image} 
                       alt={bike.name}
                       loading="lazy"
-                      decoding="async"
                       className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-moto-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -174,7 +202,10 @@ export default function ProductGrid() {
                   </div>
                   
                   <button 
-                    onClick={() => setSelectedBike(bike)}
+                    onClick={() => {
+                        setSelectedBike(bike);
+                        setMainImage(bike.image);
+                    }}
                     className="w-full py-4 border-2 border-moto-black text-[10px] font-black uppercase tracking-[0.2em] text-moto-black hover:bg-moto-black hover:text-white transition-all flex items-center justify-center gap-2"
                   >
                     Ficha Técnica
@@ -187,7 +218,6 @@ export default function ProductGrid() {
         </div>
       </div>
 
-      {/* Product Details View */}
       <AnimatePresence>
         {selectedBike && (
           <motion.div
@@ -197,7 +227,6 @@ export default function ProductGrid() {
             className="fixed inset-0 z-[100] bg-white overflow-y-auto"
           >
             <div className="min-h-screen flex flex-col md:flex-row">
-              {/* Left Column: Image Center */}
               <div className="md:w-1/2 bg-slate-50 relative flex flex-col items-center justify-center pt-24 pb-12 px-6 border-r border-slate-100 min-h-[60vh] md:min-h-screen">
                 <button 
                   className="absolute top-8 left-8 text-moto-black w-12 h-12 flex items-center justify-center hover:bg-slate-200 rounded-full transition-colors z-[110]"
@@ -219,12 +248,10 @@ export default function ProductGrid() {
                   <img
                     src={mainImage || selectedBike.image}
                     alt={selectedBike.name}
-                    decoding="async"
                     className="max-h-[65vh] w-auto object-contain filter drop-shadow-[0_35px_35px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-500"
                   />
                 </motion.div>
 
-                {/* Mini Gallery */}
                 <div className="mt-auto flex gap-6 overflow-x-auto pb-4 w-full justify-center px-4">
                   {selectedBike.images.map((img, i) => (
                       <button 
@@ -234,25 +261,13 @@ export default function ProductGrid() {
                           (mainImage || selectedBike.image) === img ? 'border-moto-orange scale-105' : 'border-slate-100 opacity-60 hover:opacity-100'
                         }`}
                       >
-                        <img 
-                          src={img} 
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-contain" 
-                        />
+                        <img src={img} className="w-full h-full object-contain" />
                       </button>
                     ))
                   }
                 </div>
-
-                <div className="absolute bottom-8 left-12 hidden lg:block">
-                   <div className="text-8xl font-display font-black text-slate-100 uppercase tracking-tighter select-none leading-none">
-                     EXHIBIT
-                   </div>
-                </div>
               </div>
 
-              {/* Right Column: Information */}
               <div className="md:w-1/2 p-8 lg:p-20 flex flex-col justify-center">
                 <div className="mb-12">
                   <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-moto-orange mb-4">
@@ -296,7 +311,6 @@ export default function ProductGrid() {
         )}
       </AnimatePresence>
 
-      {/* Full Screen Image Viewer */}
       <AnimatePresence>
         {fullScreenImage && (
           <motion.div
@@ -306,17 +320,11 @@ export default function ProductGrid() {
             className="fixed inset-0 z-[200] bg-white/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-20 shadow-2xl"
             onClick={() => setFullScreenImage(null)}
           >
-            <button 
-              className="absolute top-8 right-8 text-moto-black w-12 h-12 flex items-center justify-center hover:bg-slate-100 rounded-full transition-colors z-[210]"
-            >
-              <X className="w-8 h-8" />
-            </button>
             <motion.img
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               src={fullScreenImage}
               className="max-w-full max-h-full object-contain filter drop-shadow-[0_50px_50px_rgba(0,0,0,0.15)]"
-              onClick={(e) => e.stopPropagation()}
             />
           </motion.div>
         )}
